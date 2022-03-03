@@ -23,3 +23,18 @@
   display: block;
   margin: auto;
 }
+
+.player-form {
+  display: none;
+  position: absolute;
+  left: 0px;
+  top: 0;
+  z-index: 99;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  background-color: #e4dcdc;
+  height: 100vh;
+  width: 100%;
+}
