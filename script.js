@@ -3,9 +3,9 @@ const createPlayer = (name, marker) => {
 }
 
 const gameboard = (() => {
+
   let gameOn = false;
-  board = ['', '', '', '', '', '', '', '', '',];
-  const playerForm = document.querySelector('.player-form');
+  let board = ['', '', '', '', '', '', '', '', '',];
   const content = document.querySelector('.content');
   const gameBoard = document.createElement('div');
   gameBoard.classList.add('game-board');
@@ -19,11 +19,11 @@ const gameboard = (() => {
       square.classList.add('square');
       i++;
       gameBoard.append(square);
-      square.addEventListener('click', takeTurn);
+      square.addEventListener('click', game.takeTurn);
     });
   }
 
-  const renderBoard = () => {
+  const _renderBoard = () => {
     if (gameOn) {
       alert('Game already started');
     } else {
@@ -33,35 +33,35 @@ const gameboard = (() => {
     content.append(gameBoard);
   }
 
-  const _toggleForm = () => {
-    if (playerForm.style.display === 'flex') {
-      playerForm.style.display = 'none';
-    } else {
-      playerForm.style.display = 'flex';
-    }
-  }
 
-    // let playerOneName = document.querySelector('#player1').value;
-    // let playerTwoName = document.querySelector('#player2').value;
-    
-  const takeTurn = (e, playerTwo) => {
-    let currentSquareIndex = e.target.dataset.index;
-    console.log(currentSquareIndex);
-    e.target.style.backgroundColor = '#535353';
-    board[currentSquareIndex] = playerTwo;
-    console.log(board);
-  }
-
-  const gameInit = (e) => {
-    e.preventDefault();
-    renderBoard();
-    _toggleForm();
-  }
-
-  start.addEventListener('click', _toggleForm);
-  playerForm.addEventListener('submit', gameInit);
+  start.addEventListener('click', _renderBoard);
   
+  return {
+    board
+  }
+
 })();
 
 
 
+
+
+const game = (() => {
+  let playerOne = createPlayer('Player 1', 'x');
+  console.log(playerOne);
+
+  let currentPlayer = playerOne;
+
+  const takeTurn = (e) => {
+    let currentSquareIndex = e.target.dataset.index;
+    console.log(currentSquareIndex);
+    e.target.style.backgroundColor = '#535353';
+    gameboard.board[currentSquareIndex] = currentPlayer.marker;
+    console.log(gameboard.board);
+  }
+
+  return {
+    takeTurn
+  }
+
+})();
