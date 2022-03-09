@@ -14,10 +14,19 @@
 }
 
 .square {
+  background: no-repeat center;
+  background-size: 75px 75px;
   width: 125px;
   height: 125px;
   border: 1px solid #161616;
+  transition: .4s;
 }
+
+.square:hover {
+  background: #dfdfdf no-repeat center;
+  background-size: 80px 80px;
+}
+
 
 .start {
   display: block;

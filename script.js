@@ -11,7 +11,7 @@ const gameboard = (() => {
   gameBoard.classList.add('game-board');
   const start = document.querySelector('.start');
 
-  const addClickEvents = () => {
+  const _addClickEvents = () => {
     let i = 0;
     board.forEach(square => {
       square = document.createElement('div');
@@ -28,7 +28,7 @@ const gameboard = (() => {
       alert('Game already started');
     } else {
       gameOn = true;
-      addClickEvents();
+      _addClickEvents();
     }
     content.append(gameBoard);
   }
@@ -51,34 +51,33 @@ const game = (() => {
   let playerOne = createPlayer('Player 1', 'x');
   let playerTwo = createPlayer('Player 2', 'o');
 
-
   let activePlayer = playerOne;
   let activePlayerDisplay = document.querySelector('.active-player-display');
 
-  const getNextPlayer = () => {
-    console.log(this.activePlayer);
+  const _getNextPlayer = () => {
     activePlayer == playerOne ? activePlayer = playerTwo : activePlayer = playerOne;
     return activePlayer;
   }
 
-
-
-
-  const updatePlayerTurnDisplay = () => {
-    activePlayerDisplay.innerText = getNextPlayer.name;
+  const _updateTurnDisplay = () => {
+    activePlayerDisplay.innerText = activePlayer.name;
     gameboard.content.append(activePlayerDisplay);
   }
 
+  const _placeActiveSymbol = (e) => {
+    activePlayer == playerOne ? e.target.style.backgroundImage = "url('img/brush-solid.svg')" : e.target.style.backgroundImage = "url('img/ghost-solid.svg')"
+  }
+
   const takeTurn = (e) => {
-    let currentSquareIndex = e.target.dataset.index;
-    console.log(currentSquareIndex);
-    e.target.style.backgroundColor = '#535353';
-    getNextPlayer();
-    updatePlayerTurnDisplay();
-    console.log(activePlayer);
-    gameboard.board[currentSquareIndex] = activePlayer.marker;
+    console.log(e.target.dataset.index);
+    _placeActiveSymbol(e);
+    _getNextPlayer();
+    _updateTurnDisplay();
+    gameboard.board[e.target.dataset.index] = activePlayer.marker;
     console.log(gameboard.board);
   }
+
+
 
   return {
     takeTurn
