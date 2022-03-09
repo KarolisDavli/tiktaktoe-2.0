@@ -50,21 +50,22 @@ const gameboard = (() => {
 const game = (() => {
   let playerOne = createPlayer('Player 1', 'x');
   let playerTwo = createPlayer('Player 2', 'o');
-  console.log(playerOne);
+
 
   let activePlayer = playerOne;
   let activePlayerDisplay = document.querySelector('.active-player-display');
 
   const getNextPlayer = () => {
+    console.log(this.activePlayer);
     activePlayer == playerOne ? activePlayer = playerTwo : activePlayer = playerOne;
     return activePlayer;
   }
 
-  console.log(getNextPlayer().name);
 
 
-  const updateDisplay = () => {
-    activePlayerDisplay.innerText = getNextPlayer().name;
+
+  const updatePlayerTurnDisplay = () => {
+    activePlayerDisplay.innerText = getNextPlayer.name;
     gameboard.content.append(activePlayerDisplay);
   }
 
@@ -73,7 +74,8 @@ const game = (() => {
     console.log(currentSquareIndex);
     e.target.style.backgroundColor = '#535353';
     getNextPlayer();
-    updateDisplay();
+    updatePlayerTurnDisplay();
+    console.log(activePlayer);
     gameboard.board[currentSquareIndex] = activePlayer.marker;
     console.log(gameboard.board);
   }
