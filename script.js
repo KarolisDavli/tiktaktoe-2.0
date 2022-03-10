@@ -60,7 +60,7 @@ const game = (() => {
   }
 
   const _updateTurnDisplay = () => {
-    activePlayerDisplay.innerText = activePlayer.name;
+    activePlayerDisplay.innerText = `Next to move: ${activePlayer.name}`;
     gameboard.content.append(activePlayerDisplay);
   }
 
@@ -69,12 +69,18 @@ const game = (() => {
   }
 
   const takeTurn = (e) => {
-    console.log(e.target.dataset.index);
-    _placeActiveSymbol(e);
-    _getNextPlayer();
-    _updateTurnDisplay();
-    gameboard.board[e.target.dataset.index] = activePlayer.marker;
-    console.log(gameboard.board);
+    let currentSquareIndex = e.target.dataset.index;
+
+    if (gameboard.board[currentSquareIndex] == '') {
+      gameboard.board[currentSquareIndex] = activePlayer.marker;
+      console.log(gameboard.board[currentSquareIndex]);
+      _placeActiveSymbol(e);
+      _getNextPlayer();
+      _updateTurnDisplay();
+      console.log(gameboard.board);
+    } else {
+      alert('Choose other tile')
+    }
   }
 
 
