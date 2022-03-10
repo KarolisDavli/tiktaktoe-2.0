@@ -10,6 +10,16 @@ const gameboard = (() => {
   const gameBoard = document.createElement('div');
   gameBoard.classList.add('game-board');
   const start = document.querySelector('.start');
+  const controls = document.querySelector('.controls');
+
+
+  const _renderGameResetBtn = () => {
+    const reset = document.createElement('button');
+    reset.innerText = 'Reset Game';
+    reset.classList.add('reset');
+    controls.appendChild(reset);
+    reset.addEventListener('click', game.resetGame);
+  }
 
   const _addClickEvents = () => {
     let i = 0;
@@ -29,8 +39,9 @@ const gameboard = (() => {
     } else {
       gameOn = true;
       _addClickEvents();
+      _renderGameResetBtn();
     }
-    content.append(gameBoard);
+    content.appendChild(gameBoard);
   }
 
 
@@ -40,7 +51,6 @@ const gameboard = (() => {
     board,
     content
   }
-
 })();
 
 
@@ -83,10 +93,26 @@ const game = (() => {
     }
   }
 
+  const resetGame = () => {
+    gameboard.board = ['', '', '', '', '', '', '', '', '',];
+    activePlayer = playerOne;
+    console.log(gameboard.board);
+    let elemPictures = document.querySelectorAll('.square');
+    elemPictures.forEach(el => {
+      el.style.backgroundImage = '';
+    })
+    
+  }
+
+
+
+
+
+
 
 
   return {
-    takeTurn
+    takeTurn,
+    resetGame
   }
-
 })();

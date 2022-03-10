@@ -1,6 +1,6 @@
 .content {
   position: relative;
-  height: 90vh;
+  height: 80vh;
 }
 
 .game-board {
@@ -27,11 +27,12 @@
   background-size: 80px 80px;
 }
 
-
-.start {
+.start,
+.reset {
   display: block;
-  margin: auto;
+  margin: .5rem auto;
 }
+
 
 .active-player-display {
   text-align: center;
