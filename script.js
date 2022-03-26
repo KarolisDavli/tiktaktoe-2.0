@@ -2,15 +2,16 @@ const createPlayer = (name, marker) => {
   return {name, marker};
 }
 
-const gameboard = (() => {
+const gameArea = (() => {
 
   let gameOn = false;
   let board = ['', '', '', '', '', '', '', '', '',];
+
   const content = document.querySelector('.content');
-  const gameBoard = document.createElement('div');
-  gameBoard.classList.add('game-board');
   const start = document.querySelector('.start');
   const controls = document.querySelector('.controls');
+  const gameBoard = document.createElement('div');
+  gameBoard.classList.add('game-board');
 
 
   const _renderGameResetBtn = () => {
@@ -22,22 +23,23 @@ const gameboard = (() => {
   }
 
   const _addClickEvents = () => {
-    let i = 0;
+    let indextCounter = 0;
     board.forEach(square => {
       square = document.createElement('div');
-      square.setAttribute('data-index', i);
+      square.setAttribute('data-index', indextCounter);
       square.classList.add('square');
-      i++;
-      gameBoard.append(square);
       square.addEventListener('click', game.takeTurn);
+      gameBoard.append(square);
+      indextCounter++;
     });
   }
 
-  const _renderBoard = () => {
+  const _gameInit = () => {
     if (gameOn) {
       alert('Game already started');
     } else {
       gameOn = true;
+      game.updateTurnDisplay();
       _addClickEvents();
       _renderGameResetBtn();
     }
@@ -45,7 +47,7 @@ const gameboard = (() => {
   }
 
 
-  start.addEventListener('click', _renderBoard);
+  start.addEventListener('click', _gameInit);
   
   return {
     board,
@@ -69,9 +71,9 @@ const game = (() => {
     return activePlayer;
   }
 
-  const _updateTurnDisplay = () => {
+  const updateTurnDisplay = () => {
     activePlayerDisplay.innerText = `Next to move: ${activePlayer.name}`;
-    gameboard.content.append(activePlayerDisplay);
+    gameArea.content.append(activePlayerDisplay);
   }
 
   const _placeActiveSymbol = (e) => {
@@ -81,22 +83,22 @@ const game = (() => {
   const takeTurn = (e) => {
     let currentSquareIndex = e.target.dataset.index;
 
-    if (gameboard.board[currentSquareIndex] == '') {
-      gameboard.board[currentSquareIndex] = activePlayer.marker;
-      console.log(gameboard.board[currentSquareIndex]);
+    if (gameArea.board[currentSquareIndex] == '') {
+      gameArea.board[currentSquareIndex] = activePlayer.marker;
       _placeActiveSymbol(e);
       _getNextPlayer();
-      _updateTurnDisplay();
-      console.log(gameboard.board);
+      updateTurnDisplay();
+      console.log(gameArea.board);
     } else {
       alert('Choose other tile')
     }
   }
 
   const resetGame = () => {
-    gameboard.board = ['', '', '', '', '', '', '', '', '',];
+    gameArea.board = ['', '', '', '', '', '', '', '', '',];
     activePlayer = playerOne;
-    console.log(gameboard.board);
+    updateTurnDisplay();
+    console.log(gameArea.board);
     let elemPictures = document.querySelectorAll('.square');
     elemPictures.forEach(el => {
       el.style.backgroundImage = '';
@@ -113,6 +115,7 @@ const game = (() => {
 
   return {
     takeTurn,
-    resetGame
+    resetGame,
+    updateTurnDisplay
   }
 })();
