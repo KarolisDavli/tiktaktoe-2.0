@@ -77,7 +77,8 @@ const game = (() => {
   }
 
   const _placeActiveSymbol = (e) => {
-    activePlayer == playerOne ? e.target.style.backgroundImage = "url('img/brush-solid.svg')" : e.target.style.backgroundImage = "url('img/ghost-solid.svg')"
+    activePlayer == playerOne ? e.target.style.backgroundImage = "url('img/brush-solid.svg')" : e.target.style.backgroundImage = "url('img/ghost-solid.svg')";
+    
   }
 
   const takeTurn = (e) => {
@@ -88,9 +89,20 @@ const game = (() => {
       _placeActiveSymbol(e);
       _getNextPlayer();
       updateTurnDisplay();
+      _checkIfTie();
       console.log(gameArea.board);
     } else {
       alert('Choose other tile')
+    }
+  }
+
+  const _checkIfTie = () => {
+    let emptyTile = gameArea.board.some((tile) => {
+      return tile == '';
+    })
+    if (!emptyTile) {
+      activePlayerDisplay.innerText = 'Tie! Hit \'Reset Game\' to play again';
+      gameArea.content.append(activePlayerDisplay);
     }
   }
 
