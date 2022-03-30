@@ -85,8 +85,8 @@ const game = (() => {
     return activePlayer;
   }
 
-  const updateTurnDisplay = () => {
-    activePlayerDisplay.innerText = `Next to move: ${activePlayer.name}`;
+  const updateTurnDisplay = (msg) => {
+    activePlayerDisplay.innerText = msg;
     gameArea.content.append(activePlayerDisplay);
   }
 
@@ -100,7 +100,7 @@ const game = (() => {
 
     if (gameArea.board[currentSquareIndex] == '') {
       gameArea.board[currentSquareIndex] = activePlayer.marker;
-      updateTurnDisplay();
+      updateTurnDisplay(`Next to move: ${activePlayer.name}`);
       _placeActiveSymbol(e);
       _checkWinCondition();
       _getNextPlayer();
@@ -116,8 +116,7 @@ const game = (() => {
       return tile == '';
     })
     if (!emptyTile) {
-      activePlayerDisplay.innerText = 'Tie! Hit \'Reset Game\' to play again';
-      gameArea.content.append(activePlayerDisplay);
+      updateTurnDisplay('Tie! Hit \'Reset Game\' to play again');
     }
   }
 
@@ -131,15 +130,15 @@ const game = (() => {
     });
 
     if (win) {
-      activePlayerDisplay.innerText = `Game over: ${activePlayer.name} wins`;
-      gameArea.content.append(activePlayerDisplay);
+      updateTurnDisplay(`Game over: ${activePlayer.name} wins.
+      Reset Game to play again`);
     }
   }
 
   const resetGame = () => {
     gameArea.board = ['', '', '', '', '', '', '', '', '',];
     activePlayer = playerOne;
-    updateTurnDisplay();
+    updateTurnDisplay(`Next to move: ${activePlayer.name}`);
     console.log(gameArea.board);
     let elemPictures = document.querySelectorAll('.square');
     elemPictures.forEach(el => {
