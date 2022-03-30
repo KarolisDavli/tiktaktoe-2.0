@@ -13,7 +13,6 @@ const gameArea = (() => {
   const gameBoard = document.createElement('div');
   gameBoard.classList.add('game-board');
 
-
   const _renderGameResetBtn = () => {
     const reset = document.createElement('button');
     reset.innerText = 'Reset Game';
@@ -46,7 +45,6 @@ const gameArea = (() => {
     content.appendChild(gameBoard);
   }
 
-
   start.addEventListener('click', _gameInit);
   
   return {
@@ -54,9 +52,6 @@ const gameArea = (() => {
     content
   }
 })();
-
-
-
 
 
 const game = (() => {
@@ -71,8 +66,6 @@ const game = (() => {
     [0, 4, 8],
     [2, 4, 6],
   ];
-
-
 
   let playerOne = createPlayer('Player 1', 'x');
   let playerTwo = createPlayer('Player 2', 'o');
@@ -105,7 +98,6 @@ const game = (() => {
       _checkWinCondition();
       _getNextPlayer();
       _checkIfTie();
-      console.log(gameArea.board);
     } else {
       alert('Choose other tile')
     }
@@ -139,14 +131,11 @@ const game = (() => {
     gameArea.board = ['', '', '', '', '', '', '', '', '',];
     activePlayer = playerOne;
     updateTurnDisplay(`Next to move: ${activePlayer.name}`);
-    console.log(gameArea.board);
     let elemPictures = document.querySelectorAll('.square');
     elemPictures.forEach(el => {
       el.style.backgroundImage = '';
     })
-    
   }
-
 
   return {
     takeTurn,
