@@ -60,6 +60,20 @@ const gameArea = (() => {
 
 
 const game = (() => {
+
+  const winConditions = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+
+
+
   let playerOne = createPlayer('Player 1', 'x');
   let playerTwo = createPlayer('Player 2', 'o');
 
@@ -86,9 +100,10 @@ const game = (() => {
 
     if (gameArea.board[currentSquareIndex] == '') {
       gameArea.board[currentSquareIndex] = activePlayer.marker;
-      _placeActiveSymbol(e);
-      _getNextPlayer();
       updateTurnDisplay();
+      _placeActiveSymbol(e);
+      _checkWinCondition();
+      _getNextPlayer();
       _checkIfTie();
       console.log(gameArea.board);
     } else {
@@ -106,6 +121,21 @@ const game = (() => {
     }
   }
 
+  const _checkWinCondition = () => {
+    let win = winConditions.find((condition) => {
+      const a = condition[0]; // a, b, c are just indexes of the gameBoard array
+      const b = condition[1];
+      const c = condition[2];
+
+      return (gameArea.board[a] && gameArea.board[a] === gameArea.board[b] && gameArea.board[a] === gameArea.board[c]);
+    });
+
+    if (win) {
+      activePlayerDisplay.innerText = `Game over: ${activePlayer.name} wins`;
+      gameArea.content.append(activePlayerDisplay);
+    }
+  }
+
   const resetGame = () => {
     gameArea.board = ['', '', '', '', '', '', '', '', '',];
     activePlayer = playerOne;
@@ -117,12 +147,6 @@ const game = (() => {
     })
     
   }
-
-
-
-
-
-
 
 
   return {
