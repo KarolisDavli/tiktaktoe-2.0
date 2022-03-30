@@ -38,7 +38,7 @@ const gameArea = (() => {
       alert('Game already started');
     } else {
       gameOn = true;
-      game.updateTurnDisplay();
+      game.updateTurnDisplay(`Player 1 starts`);
       _addClickEvents();
       _renderGameResetBtn();
     }
@@ -114,7 +114,7 @@ const game = (() => {
 
   const _checkWinCondition = () => {
     let win = winConditions.find((condition) => {
-      const a = condition[0]; // a, b, c are just indexes of the gameBoard array
+      const a = condition[0];
       const b = condition[1];
       const c = condition[2];
 
